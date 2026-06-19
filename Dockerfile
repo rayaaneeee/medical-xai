@@ -4,7 +4,7 @@ WORKDIR /app
 
 # System deps for OpenCV + Pillow
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    libglib2.0-0 libgl1-mesa-glx libgomp1 \
+    libglib2.0-0 libgl1 libgomp1 \
     && rm -rf /var/lib/apt/lists/*
 
 # Install PyTorch CPU-only first (much smaller, no CUDA needed on HF free tier)
