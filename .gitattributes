@@ -1,1 +1,2 @@
 checkpoints/*.pt filter=lfs diff=lfs merge=lfs -text
+web/static/examples/*.jpg filter=lfs diff=lfs merge=lfs -text
