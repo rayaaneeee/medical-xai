@@ -1,3 +1,13 @@
+---
+title: DermAI Skin Lesion Classification
+emoji: 🔬
+colorFrom: blue
+colorTo: purple
+sdk: docker
+app_file: server.py
+pinned: false
+---
+
 <div align="center">
 
 # DermAI — Medical Imaging with Explainability
