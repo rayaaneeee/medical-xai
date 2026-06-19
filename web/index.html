@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>DermAI — Medical Imaging with Explainability</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/css/style.css"/>
+</head>
+<body>
+
+<!-- Custom cursor -->
+<div id="cursor"></div>
+<div id="cursor-dot"></div>
+
+<!-- Navbar -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">Derm<span>AI</span></a>
+    <div class="nav-links">
+      <a href="#how">How it works</a>
+      <a href="#demo">Live Demo</a>
+      <a href="#tech">Technology</a>
+      <a href="#about">About</a>
+    </div>
+    <a href="#demo" class="nav-cta">Try it →</a>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════ HERO ═══════════════════════════ -->
+<section id="hero">
+  <canvas id="hero-canvas"></canvas>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow reveal">AI-Powered Dermatology</div>
+    <h1 class="hero-title reveal">
+      The model<br>
+      <em>that shows<br>its work.</em>
+    </h1>
+    <p class="hero-desc reveal">
+      EfficientNet-B0 trained on 22,687 skin lesion images — with<br>
+      Grad-CAM explanations, calibrated uncertainty, and a live demo.
+    </p>
+    <div class="hero-actions reveal">
+      <a href="#demo" class="btn-primary">Analyze an image</a>
+      <a href="#how" class="btn-ghost">How it works ↓</a>
+    </div>
+  </div>
+
+  <div class="hero-stats reveal">
+    <div class="stat">
+      <span class="stat-val" data-target="96.3" data-decimals="1">0</span><span class="stat-unit">%</span>
+      <span class="stat-label">AUC-ROC</span>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat">
+      <span class="stat-val" data-target="3.0" data-decimals="1">0</span><span class="stat-unit">%</span>
+      <span class="stat-label">Calibration ECE</span>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat">
+      <span class="stat-val" data-target="7">0</span>
+      <span class="stat-label">Lesion classes</span>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat">
+      <span class="stat-val" data-target="22687">0</span>
+      <span class="stat-label">Training images</span>
+    </div>
+  </div>
+
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span>scroll</span>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ HOW IT WORKS ═══════════════════════════ -->
+<section id="how" class="section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag reveal">Process</span>
+      <h2 class="section-title reveal">From pixel to prediction<br><em>in four steps</em></h2>
+    </div>
+
+    <div class="steps">
+      <div class="step reveal">
+        <div class="step-num">01</div>
+        <div class="step-icon">
+          <svg viewBox="0 0 48 48" fill="none"><rect x="8" y="8" width="32" height="32" rx="6" stroke="currentColor" stroke-width="2"/><circle cx="18" cy="20" r="4" stroke="currentColor" stroke-width="2"/><path d="M8 36l10-10 6 6 8-10 8 14" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+        </div>
+        <h3>Image Upload</h3>
+        <p>Drop any dermoscopy image. The system normalises it to 224×224 with ImageNet statistics and prepares it for inference.</p>
+      </div>
+
+      <div class="step-arrow">→</div>
+
+      <div class="step reveal">
+        <div class="step-num">02</div>
+        <div class="step-icon">
+          <svg viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="10" stroke="currentColor" stroke-width="2"/><path d="M24 8v4M24 36v4M8 24h4M36 24h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M12.7 12.7l2.8 2.8M32.5 32.5l2.8 2.8M12.7 35.3l2.8-2.8M32.5 15.5l2.8-2.8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </div>
+        <h3>EfficientNet-B0</h3>
+        <p>A 5.3M-parameter backbone pretrained on ImageNet. Two-phase fine-tuning: frozen backbone for 3 epochs, then full fine-tuning at a discriminative learning rate.</p>
+      </div>
+
+      <div class="step-arrow">→</div>
+
+      <div class="step reveal">
+        <div class="step-num">03</div>
+        <div class="step-icon">
+          <svg viewBox="0 0 48 48" fill="none"><path d="M8 40L20 20l8 12 6-8 6 16" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M8 24c0-8.8 7.2-16 16-16s16 7.2 16 16" stroke="currentColor" stroke-width="2"/><circle cx="24" cy="24" r="3" fill="currentColor"/></svg>
+        </div>
+        <h3>Grad-CAM Explanation</h3>
+        <p>Gradients of the predicted class w.r.t. the last convolutional block produce a saliency map. We overlay it on your image so you see exactly what the model focused on.</p>
+      </div>
+
+      <div class="step-arrow">→</div>
+
+      <div class="step reveal">
+        <div class="step-num">04</div>
+        <div class="step-icon">
+          <svg viewBox="0 0 48 48" fill="none"><path d="M12 36V28M20 36V20M28 36V24M36 36V16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 12h8M8 20h4M8 28h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </div>
+        <h3>Calibrated Uncertainty</h3>
+        <p>Temperature scaling brings ECE from 10.5% → 3.0%. MC Dropout runs 30 stochastic passes — the entropy across them flags when the model is genuinely unsure.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ DEMO ═══════════════════════════ -->
+<section id="demo" class="section section-dark">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag reveal">Live</span>
+      <h2 class="section-title reveal">Try it yourself</h2>
+      <p class="section-sub reveal">Upload a dermoscopy image or pick one of our examples.</p>
+    </div>
+
+    <div class="demo-grid">
+
+      <!-- Upload panel -->
+      <div class="demo-panel reveal" id="upload-panel">
+        <div class="panel-label">Input</div>
+
+        <div id="dropzone" class="dropzone">
+          <div class="dz-inner" id="dz-inner">
+            <div class="dz-icon">
+              <svg viewBox="0 0 48 48" fill="none"><path d="M24 8v24M16 20l8-12 8 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 36h32" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </div>
+            <p class="dz-text">Drop image here</p>
+            <p class="dz-sub">or <label for="file-input" class="dz-browse">browse files</label></p>
+          </div>
+          <img id="preview-img" class="preview-img hidden" alt="preview"/>
+          <div class="scan-line" id="scan-line"></div>
+          <input type="file" id="file-input" accept="image/*" class="sr-only"/>
+        </div>
+
+        <div class="examples-row">
+          <p class="examples-label">Examples from ISIC 2019</p>
+          <div id="examples-grid" class="examples-grid">
+            <div class="example-skeleton"></div>
+            <div class="example-skeleton"></div>
+            <div class="example-skeleton"></div>
+            <div class="example-skeleton"></div>
+            <div class="example-skeleton"></div>
+            <div class="example-skeleton"></div>
+            <div class="example-skeleton"></div>
+            <div class="example-skeleton"></div>
+            <div class="example-skeleton"></div>
+          </div>
+        </div>
+
+        <div class="controls">
+          <div class="control-group">
+            <label class="ctrl-label">Explainability Method</label>
+            <div class="segmented" id="cam-select">
+              <button class="seg-btn active" data-val="gradcam">Grad-CAM</button>
+              <button class="seg-btn" data-val="gradcam++">Grad-CAM++</button>
+              <button class="seg-btn" data-val="eigencam">EigenCAM</button>
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="ctrl-label">MC Passes <span id="passes-val">30</span></label>
+            <input type="range" id="mc-passes" min="10" max="100" value="30" step="10" class="slider"/>
+          </div>
+        </div>
+
+        <button id="analyze-btn" class="analyze-btn" disabled>
+          <span class="btn-text">Select an image first</span>
+          <div class="btn-loader hidden"></div>
+        </button>
+      </div>
+
+      <!-- Results panel -->
+      <div class="demo-panel results-panel reveal" id="results-panel">
+        <div class="panel-label">Results</div>
+
+        <!-- Empty state -->
+        <div id="results-empty" class="results-empty">
+          <div class="empty-animation">
+            <canvas id="idle-canvas" width="200" height="200"></canvas>
+          </div>
+          <p>Run an analysis to see Grad-CAM heatmaps,<br>calibrated probabilities, and uncertainty estimates.</p>
+        </div>
+
+        <!-- Results (hidden until run) -->
+        <div id="results-content" class="hidden">
+          <!-- Images side by side -->
+          <div class="images-row">
+            <div class="img-wrap">
+              <div class="img-label">Original</div>
+              <img id="res-original" class="res-img" alt="original"/>
+            </div>
+            <div class="img-wrap">
+              <div class="img-label">Grad-CAM</div>
+              <img id="res-gradcam" class="res-img" alt="gradcam"/>
+              <div class="gradcam-legend">
+                <div class="legend-bar"></div>
+                <div class="legend-labels"><span>Low</span><span>High</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Prediction -->
+          <div class="prediction-block">
+            <div class="pred-tag">Top prediction</div>
+            <div id="pred-name" class="pred-name">—</div>
+            <div id="pred-conf" class="pred-conf">—</div>
+          </div>
+
+          <!-- Probability bars -->
+          <div class="probs-block">
+            <div class="block-label">All classes</div>
+            <div id="probs-list" class="probs-list"></div>
+          </div>
+
+          <!-- Metrics row -->
+          <div class="metrics-row">
+            <div class="metric-box" id="uncertainty-box">
+              <div class="metric-icon-wrap">
+                <canvas id="gauge-canvas" width="80" height="80"></canvas>
+              </div>
+              <div class="metric-text">
+                <div class="metric-name">Uncertainty</div>
+                <div id="metric-uncertainty" class="metric-val">—</div>
+                <div id="metric-unc-label" class="metric-sub">—</div>
+              </div>
+            </div>
+            <div class="metric-box">
+              <div class="metric-icon-wrap metric-temp-icon">T</div>
+              <div class="metric-text">
+                <div class="metric-name">Temperature</div>
+                <div id="metric-temp" class="metric-val">—</div>
+                <div class="metric-sub">Post-hoc calibration</div>
+              </div>
+            </div>
+            <div class="metric-box">
+              <div class="metric-icon-wrap metric-passes-icon">
+                <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.5"/><path d="M12 7v5l3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              </div>
+              <div class="metric-text">
+                <div class="metric-name">MC Passes</div>
+                <div id="metric-passes" class="metric-val">—</div>
+                <div class="metric-sub">Stochastic forward passes</div>
+              </div>
+            </div>
+          </div>
+
+          <p class="disclaimer">⚠ Research demo — not for clinical use</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ TECHNOLOGY ═══════════════════════════ -->
+<section id="tech" class="section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag reveal">Architecture</span>
+      <h2 class="section-title reveal">Built on solid foundations</h2>
+    </div>
+
+    <div class="arch-grid">
+      <div class="arch-diagram reveal">
+        <div class="arch-flow">
+          <div class="arch-block input-block">
+            <div class="ab-label">Input</div>
+            <div class="ab-content">224 × 224 RGB</div>
+          </div>
+          <div class="arch-arrow">↓</div>
+          <div class="arch-block backbone-block">
+            <div class="ab-label">Backbone</div>
+            <div class="ab-content">EfficientNet-B0<br><small>5.3M params · ImageNet</small></div>
+          </div>
+          <div class="arch-arrow">↓</div>
+          <div class="arch-block head-block">
+            <div class="ab-label">Head</div>
+            <div class="ab-content">
+              Dropout(0.3) → Linear(1280→256)<br>
+              ReLU → Dropout(0.3) → Linear(256→7)
+            </div>
+          </div>
+          <div class="arch-arrow">↓</div>
+          <div class="arch-block calib-block">
+            <div class="ab-label">Calibration</div>
+            <div class="ab-content">Temperature T = 0.694<br><small>ECE: 10.5% → 3.0%</small></div>
+          </div>
+          <div class="arch-arrow">↓</div>
+          <div class="arch-block out-block">
+            <div class="ab-label">Output</div>
+            <div class="ab-content">Prediction + Grad-CAM + Entropy</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="arch-cards">
+        <div class="arch-card reveal">
+          <div class="ac-icon">⚡</div>
+          <h3>Two-Phase Training</h3>
+          <p>Backbone frozen for 3 epochs while the head learns fast. Then unfrozen at lr÷5 with cosine annealing. AUC jumped from 0.876 → 0.915 in a single epoch post-unfreeze.</p>
+        </div>
+        <div class="arch-card reveal">
+          <div class="ac-icon">🎯</div>
+          <h3>Grad-CAM</h3>
+          <p>Gradients of the class score w.r.t. <code>blocks[-1]</code> output are globally average-pooled → importance weights per channel → weighted feature map sum → bilinear upscale to 224px.</p>
+        </div>
+        <div class="arch-card reveal">
+          <div class="ac-icon">🌡️</div>
+          <h3>Temperature Scaling</h3>
+          <p>A single scalar T optimised on validation NLL. Calibrated logits = logits ÷ T. No accuracy change — only confidence alignment. Evaluated with Expected Calibration Error (15 bins).</p>
+        </div>
+        <div class="arch-card reveal">
+          <div class="ac-icon">🔮</div>
+          <h3>MC Dropout</h3>
+          <p>At inference, Dropout stays active. 30 stochastic passes sample different network masks. Predictive entropy H = −Σ p̄ log p̄ quantifies epistemic uncertainty.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ CLASSES ═══════════════════════════ -->
+<section id="classes" class="section section-dark">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag reveal">Dataset</span>
+      <h2 class="section-title reveal">Seven lesion types,<br><em>one model</em></h2>
+    </div>
+
+    <div class="classes-grid">
+      <div class="class-card reveal" style="--delay:0ms">
+        <div class="class-abbr mel">MEL</div>
+        <div class="class-info">
+          <h4>Melanoma</h4>
+          <p>Most dangerous malignant skin cancer. Model must distinguish irregular pigmentation from benign moles.</p>
+          <span class="class-tag malignant">Malignant</span>
+        </div>
+      </div>
+      <div class="class-card reveal" style="--delay:60ms">
+        <div class="class-abbr nv">NV</div>
+        <div class="class-info">
+          <h4>Melanocytic Nevus</h4>
+          <p>Common mole. Makes up ~50% of the dataset — severe class imbalance that makes AUC the right metric.</p>
+          <span class="class-tag benign">Benign</span>
+        </div>
+      </div>
+      <div class="class-card reveal" style="--delay:120ms">
+        <div class="class-abbr bcc">BCC</div>
+        <div class="class-info">
+          <h4>Basal Cell Carcinoma</h4>
+          <p>Most common skin cancer worldwide. Rarely metastasises but requires early treatment.</p>
+          <span class="class-tag malignant">Malignant</span>
+        </div>
+      </div>
+      <div class="class-card reveal" style="--delay:180ms">
+        <div class="class-abbr ak">AK</div>
+        <div class="class-info">
+          <h4>Actinic Keratosis</h4>
+          <p>Sun-damaged skin that can progress to squamous cell carcinoma if untreated.</p>
+          <span class="class-tag precancerous">Pre-cancerous</span>
+        </div>
+      </div>
+      <div class="class-card reveal" style="--delay:240ms">
+        <div class="class-abbr bkl">BKL</div>
+        <div class="class-info">
+          <h4>Benign Keratosis</h4>
+          <p>Harmless seborrhoeic keratosis, solar lentigo, or lichen planus-like keratosis.</p>
+          <span class="class-tag benign">Benign</span>
+        </div>
+      </div>
+      <div class="class-card reveal" style="--delay:300ms">
+        <div class="class-abbr df">DF</div>
+        <div class="class-info">
+          <h4>Dermatofibroma</h4>
+          <p>Benign fibrous nodule, most common on legs. Rare in the dataset (&lt;3%).</p>
+          <span class="class-tag benign">Benign</span>
+        </div>
+      </div>
+      <div class="class-card reveal" style="--delay:360ms">
+        <div class="class-abbr vasc">VASC</div>
+        <div class="class-info">
+          <h4>Vascular Lesion</h4>
+          <p>Blood vessel anomalies — angiomas, angiokeratomas. Rarest class in dataset.</p>
+          <span class="class-tag benign">Benign</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ ABOUT ═══════════════════════════ -->
+<section id="about" class="section">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-text">
+        <span class="section-tag reveal">About the Author</span>
+        <h2 class="section-title reveal">Why calibration<br><em>matters more<br>than accuracy</em></h2>
+        <div class="author-byline reveal">
+          <span class="byline-built">Built end-to-end by</span>
+          <span class="byline-name">Toumi Rayane</span>
+        </div>
+        <div class="about-body reveal">
+          <p>Most student ML projects report accuracy on balanced test sets and stop there. But in medical AI, <strong>confidence calibration</strong> is what separates a research demo from something deployable.</p>
+          <p>A model that says "97% melanoma" when it should say "62%" will cause harm — either unnecessary panic or false reassurance. Temperature scaling is a one-line fix with provable guarantees on the validation set.</p>
+          <p>Similarly, <strong>uncertainty quantification</strong> via MC Dropout means the model can say "I don't know" — flagging ambiguous cases for human review rather than forcing a confident wrong answer.</p>
+        </div>
+        <div class="metrics-showcase reveal">
+          <div class="ms-item">
+            <div class="ms-val">0.9630</div>
+            <div class="ms-label">Macro AUC-ROC</div>
+            <div class="ms-note">vs 0.93–0.95 ISIC challenge top entries</div>
+          </div>
+          <div class="ms-item">
+            <div class="ms-val">0.030</div>
+            <div class="ms-label">ECE after calibration</div>
+            <div class="ms-note">vs 0.105 uncalibrated</div>
+          </div>
+        </div>
+      </div>
+      <div class="about-visual reveal">
+        <div class="reliability-card">
+          <div class="rc-title">Reliability Diagram</div>
+          <canvas id="reliability-canvas" width="320" height="260"></canvas>
+          <div class="rc-legend">
+            <div class="rcl-item"><div class="rcl-dot before"></div><span>Before calibration</span></div>
+            <div class="rcl-item"><div class="rcl-dot after"></div><span>After calibration</span></div>
+            <div class="rcl-item"><div class="rcl-dot perfect"></div><span>Perfect calibration</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ FOOTER ═══════════════════════════ -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="footer-logo">Derm<span>AI</span></div>
+        <p>A portfolio project in medical AI explainability.<br>Not for clinical use.</p>
+      </div>
+      <div class="footer-links">
+        <div class="fl-col">
+          <div class="fl-head">Stack</div>
+          <a>PyTorch</a>
+          <a>EfficientNet-B0</a>
+          <a>pytorch-grad-cam</a>
+          <a>FastAPI</a>
+        </div>
+        <div class="fl-col">
+          <div class="fl-head">Dataset</div>
+          <a>ISIC 2019</a>
+          <a>22,687 images</a>
+          <a>7 lesion classes</a>
+        </div>
+        <div class="fl-col">
+          <div class="fl-head">Trained on</div>
+          <a>Apple M3 Max</a>
+          <a>32-core GPU</a>
+          <a>48 GB unified RAM</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-author">
+        <span class="author-label">Designed, trained &amp; developed by</span>
+        <span class="author-name">Toumi Rayane</span>
+      </div>
+      <p>AUC 0.9630 · ECE 0.030 · EfficientNet-B0 on ISIC 2019</p>
+    </div>
+  </div>
+</footer>
+
+<script src="/static/js/main.js"></script>
+<script src="/static/js/demo.js"></script>
+</body>
+</html>
