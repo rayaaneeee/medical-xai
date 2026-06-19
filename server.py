@@ -38,9 +38,9 @@ app.mount("/static", StaticFiles(directory="web/static"), name="static")
 DEVICE = get_device()
 _model_cache: dict = {}
 
-DATA_DIR      = Path("data/isic/ISIC_2019_Training_Input")
-BUNDLED_DIR   = Path("web/static/examples")
-CKPT_DIR      = Path("checkpoints")
+DATA_DIR        = Path("data/isic/ISIC_2019_Training_Input")
+BUNDLED_JSON    = Path("web/static/examples.json")
+CKPT_DIR        = Path("checkpoints")
 
 
 # ── Model loading ──────────────────────────────────────────────────────────────
@@ -96,19 +96,20 @@ async def health():
 
 @app.get("/api/examples")
 async def examples():
-    # Use full dataset if available, otherwise fall back to bundled samples
+    import json as _json
+    # Use full dataset if available
     if DATA_DIR.exists():
         files = sorted(DATA_DIR.glob("ISIC_*.jpg"))[:200]
         sample = random.sample(files, min(9, len(files)))
-    elif BUNDLED_DIR.exists():
-        sample = sorted(BUNDLED_DIR.glob("*.jpg"))
-    else:
-        return {"images": []}
-    out = []
-    for p in sample:
-        img = Image.open(p).convert("RGB").resize((160, 160))
-        out.append({"name": p.stem, "thumb": pil_to_b64(img, quality=70)})
-    return {"images": out}
+        out = []
+        for p in sample:
+            img = Image.open(p).convert("RGB").resize((160, 160))
+            out.append({"name": p.stem, "thumb": pil_to_b64(img, quality=70)})
+        return {"images": out}
+    # Fall back to pre-baked base64 JSON (works on HF Spaces with no data dir)
+    if BUNDLED_JSON.exists():
+        return {"images": _json.loads(BUNDLED_JSON.read_text())}
+    return {"images": []}
 
 
 @app.post("/api/predict")

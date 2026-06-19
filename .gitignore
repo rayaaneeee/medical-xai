@@ -7,3 +7,4 @@ outputs/
 .env
 venv/
 .venv/
+web/static/examples/
