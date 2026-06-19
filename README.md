@@ -1,12 +1,12 @@
 ---
-title: DermAI — Skin Lesion Classification
+title: DermAI Skin Lesion Classification
 emoji: 🔬
-colorFrom: cyan
+colorFrom: blue
 colorTo: purple
 sdk: docker
 pinned: false
 license: mit
-short_description: EfficientNet-B0 with Grad-CAM, calibration & MC Dropout uncertainty
+short_description: EfficientNet-B0 with Grad-CAM and uncertainty
 ---
 
 # DermAI — Medical Imaging with Explainability
