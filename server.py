@@ -38,8 +38,9 @@ app.mount("/static", StaticFiles(directory="web/static"), name="static")
 DEVICE = get_device()
 _model_cache: dict = {}
 
-DATA_DIR  = Path("data/isic/ISIC_2019_Training_Input")
-CKPT_DIR  = Path("checkpoints")
+DATA_DIR      = Path("data/isic/ISIC_2019_Training_Input")
+BUNDLED_DIR   = Path("web/static/examples")
+CKPT_DIR      = Path("checkpoints")
 
 
 # ── Model loading ──────────────────────────────────────────────────────────────
@@ -95,10 +96,14 @@ async def health():
 
 @app.get("/api/examples")
 async def examples():
-    if not DATA_DIR.exists():
+    # Use full dataset if available, otherwise fall back to bundled samples
+    if DATA_DIR.exists():
+        files = sorted(DATA_DIR.glob("ISIC_*.jpg"))[:200]
+        sample = random.sample(files, min(9, len(files)))
+    elif BUNDLED_DIR.exists():
+        sample = sorted(BUNDLED_DIR.glob("*.jpg"))
+    else:
         return {"images": []}
-    files = sorted(DATA_DIR.glob("ISIC_*.jpg"))[:200]
-    sample = random.sample(files, min(9, len(files)))
     out = []
     for p in sample:
         img = Image.open(p).convert("RGB").resize((160, 160))
