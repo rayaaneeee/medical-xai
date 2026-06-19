@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/static/css/style.css"/>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+
 </head>
 <body>
 
@@ -88,31 +88,246 @@
       </div>
     </div>
 
-    <!-- Right: 3D Doctor canvas -->
+    <!-- Right: Illustrated Doctor -->
     <div class="hero-visual">
-      <div class="canvas-wrap">
-        <canvas id="three-canvas"></canvas>
-        <div class="canvas-glow"></div>
-        <!-- Floating info tags -->
-        <div class="float-tag ft-1 reveal-float">
-          <div class="ft-icon">🔬</div>
+      <div class="illus-wrap">
+        <!-- Canvas background particles -->
+        <canvas id="hero-canvas"></canvas>
+
+        <!-- Main doctor illustration -->
+        <svg class="doctor-illus" viewBox="0 0 420 540" xmlns="http://www.w3.org/2000/svg" aria-label="Friendly dermatologist illustration">
+          <defs>
+            <radialGradient id="bgGlow" cx="50%" cy="60%" r="55%">
+              <stop offset="0%" stop-color="#14b8a6" stop-opacity="0.13"/>
+              <stop offset="100%" stop-color="#14b8a6" stop-opacity="0"/>
+            </radialGradient>
+            <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+              <feDropShadow dx="0" dy="6" stdDeviation="10" flood-color="#000" flood-opacity="0.18"/>
+            </filter>
+          </defs>
+
+          <!-- Soft bg glow -->
+          <ellipse cx="210" cy="310" rx="185" ry="200" fill="url(#bgGlow)"/>
+
+          <!-- ─── WHITE COAT BODY ─── -->
+          <g filter="url(#shadow)">
+            <!-- Left coat panel -->
+            <path d="M108 490 L108 240 Q112 215 138 202 L160 196 L168 490 Z" fill="white" stroke="#e2e8f0" stroke-width="1"/>
+            <!-- Right coat panel -->
+            <path d="M312 490 L312 240 Q308 215 282 202 L260 196 L252 490 Z" fill="white" stroke="#e2e8f0" stroke-width="1"/>
+            <!-- Center torso -->
+            <rect x="163" y="193" width="94" height="300" fill="white"/>
+            <!-- Coat seam line -->
+            <line x1="210" y1="260" x2="210" y2="490" stroke="#f1f5f9" stroke-width="1.5"/>
+            <!-- Lapels -->
+            <path d="M163 193 L195 262 L210 248 L225 262 L257 193" fill="none" stroke="#e2e8f0" stroke-width="1.5"/>
+            <!-- Inner shirt / scrubs peek -->
+            <path d="M180 193 L195 245 L210 230 L225 245 L240 193 Q228 182 210 182 Q192 182 180 193 Z" fill="#bae6fd"/>
+            <!-- Coat left breast pocket -->
+            <rect x="116" y="282" width="46" height="38" rx="5" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>
+            <line x1="116" y1="295" x2="162" y2="295" stroke="#e2e8f0" stroke-width="1"/>
+            <!-- Pen in left pocket -->
+            <rect x="127" y="280" width="5" height="26" rx="2.5" fill="#38bdf8"/>
+            <rect x="135" y="280" width="5" height="22" rx="2.5" fill="#14b8a6"/>
+            <circle cx="129" cy="280" r="2.5" fill="#1e40af"/>
+            <!-- Right breast pocket -->
+            <rect x="258" y="225" width="38" height="30" rx="4" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>
+            <line x1="258" y1="236" x2="296" y2="236" stroke="#e2e8f0" stroke-width="1"/>
+          </g>
+
+          <!-- ─── STETHOSCOPE ─── -->
+          <!-- Earpieces -->
+          <circle cx="155" cy="186" r="6" fill="#0d9488"/>
+          <circle cx="265" cy="186" r="6" fill="#0d9488"/>
+          <!-- Tubes -->
+          <path d="M155 186 Q138 210 148 240 Q158 268 174 280 Q192 293 210 296 Q228 293 246 280 Q262 268 272 240 Q282 210 265 186" stroke="#14b8a6" stroke-width="4" fill="none" stroke-linecap="round"/>
+          <!-- Chest piece -->
+          <circle cx="210" cy="298" r="16" fill="#0f766e" stroke="#0d9488" stroke-width="2"/>
+          <circle cx="210" cy="298" r="10" fill="#14b8a6"/>
+          <circle cx="210" cy="298" r="4.5" fill="#ccfbf1"/>
+
+          <!-- ─── ID BADGE ─── -->
+          <g transform="translate(115 310)">
+            <rect width="52" height="36" rx="6" fill="white" stroke="#e2e8f0" stroke-width="1"/>
+            <rect width="52" height="10" rx="4" fill="#0ea5e9"/>
+            <text x="6" y="8" font-size="5.5" fill="white" font-family="Inter,sans-serif" font-weight="600">DERMATOLOGIST</text>
+            <rect x="6" y="15" width="18" height="15" rx="3" fill="#e0f2fe"/>
+            <circle cx="15" cy="21" r="5" fill="#bae6fd"/>
+            <rect x="28" y="16" width="18" height="2.5" rx="1.25" fill="#94a3b8"/>
+            <rect x="28" y="21" width="14" height="2.5" rx="1.25" fill="#cbd5e1"/>
+            <rect x="28" y="26" width="16" height="2.5" rx="1.25" fill="#e2e8f0"/>
+            <!-- Lanyard string -->
+          </g>
+          <path d="M141 310 Q141 290 148 278 Q155 266 160 258" stroke="#0ea5e9" stroke-width="2" fill="none" stroke-dasharray="3 2" opacity="0.7"/>
+
+          <!-- ─── LEFT ARM ─── -->
+          <path d="M112 238 Q96 272 98 330 Q100 362 112 390" stroke="#E8B99A" stroke-width="24" fill="none" stroke-linecap="round"/>
+          <!-- Left hand -->
+          <ellipse cx="114" cy="398" rx="16" ry="20" fill="#E8B99A"/>
+          <ellipse cx="100" cy="407" rx="7" ry="12" fill="#E8B99A" transform="rotate(-12 100 407)"/>
+          <ellipse cx="109" cy="413" rx="7" ry="13" fill="#E8B99A" transform="rotate(-5 109 413)"/>
+          <ellipse cx="120" cy="415" rx="7" ry="13" fill="#E8B99A"/>
+          <ellipse cx="130" cy="410" rx="7" ry="11" fill="#E8B99A" transform="rotate(10 130 410)"/>
+          <!-- Thumb -->
+          <ellipse cx="96" cy="396" rx="6" ry="9" fill="#E8B99A" transform="rotate(-30 96 396)"/>
+
+          <!-- ─── RIGHT ARM (holding dermatoscope) ─── -->
+          <path d="M308 238 Q326 268 324 320 Q322 352 310 378" stroke="#E8B99A" stroke-width="24" fill="none" stroke-linecap="round"/>
+          <!-- Right hand -->
+          <ellipse cx="308" cy="386" rx="16" ry="20" fill="#E8B99A"/>
+
+          <!-- ─── DERMATOSCOPE ─── -->
+          <g transform="translate(288 340) rotate(12)">
+            <!-- Handle body -->
+            <rect x="0" y="0" width="32" height="65" rx="10" fill="#1e3a5f"/>
+            <!-- Grip texture -->
+            <rect x="4" y="12" width="24" height="4" rx="2" fill="#0f2548" opacity="0.6"/>
+            <rect x="4" y="20" width="24" height="4" rx="2" fill="#0f2548" opacity="0.6"/>
+            <rect x="4" y="28" width="24" height="4" rx="2" fill="#0f2548" opacity="0.6"/>
+            <!-- Power button -->
+            <circle cx="16" cy="8" r="5" fill="#10b981"/>
+            <circle cx="16" cy="8" r="2.5" fill="#6ee7b7"/>
+            <!-- Mode buttons -->
+            <rect x="5" y="38" width="10" height="6" rx="3" fill="#38bdf8"/>
+            <rect x="17" y="38" width="10" height="6" rx="3" fill="#14b8a6"/>
+            <!-- Lens end (the examination head) -->
+            <circle cx="16" cy="72" r="18" fill="#0c1a2e" stroke="#38bdf8" stroke-width="2.5"/>
+            <circle cx="16" cy="72" r="13" fill="#0f2548"/>
+            <circle cx="16" cy="72" r="8" fill="#1d4ed8" opacity="0.5"/>
+            <circle cx="16" cy="72" r="4" fill="#38bdf8" opacity="0.7"/>
+            <!-- LED ring -->
+            <circle cx="16" cy="72" r="15.5" fill="none" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="3 3"/>
+            <!-- Light shine on lens -->
+            <path d="M10 67 L13 70" stroke="white" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+          </g>
+
+          <!-- ─── NECK ─── -->
+          <rect x="190" y="170" width="30" height="30" rx="10" fill="#E8B99A"/>
+
+          <!-- ─── HEAD ─── -->
+          <ellipse cx="210" cy="118" rx="70" ry="74" fill="#E8B99A"/>
+
+          <!-- ─── HAIR ─── -->
+          <!-- Main hair cap -->
+          <path d="M140 110 Q138 52 172 34 Q210 18 248 34 Q282 52 280 110 Q260 68 210 65 Q160 68 140 110 Z" fill="#1e293b"/>
+          <!-- Hair bun -->
+          <circle cx="278" cy="85" r="20" fill="#1e293b"/>
+          <path d="M268 68 Q276 60 284 68" stroke="#334155" stroke-width="2" fill="none"/>
+          <!-- Hair shine -->
+          <path d="M152 90 Q155 70 165 62" stroke="#475569" stroke-width="2.5" fill="none" stroke-linecap="round" opacity="0.5"/>
+
+          <!-- ─── EARS ─── -->
+          <ellipse cx="140" cy="120" rx="12" ry="16" fill="#D49070"/>
+          <ellipse cx="280" cy="120" rx="12" ry="16" fill="#D49070"/>
+          <!-- Ear inner -->
+          <ellipse cx="140" cy="120" rx="7" ry="10" fill="#c8846a" opacity="0.6"/>
+          <ellipse cx="280" cy="120" rx="7" ry="10" fill="#c8846a" opacity="0.6"/>
+          <!-- Earrings -->
+          <circle cx="140" cy="132" r="5" fill="white" stroke="#e2e8f0" stroke-width="1"/>
+          <circle cx="280" cy="132" r="5" fill="white" stroke="#e2e8f0" stroke-width="1"/>
+
+          <!-- ─── EYEBROWS ─── -->
+          <path d="M163 97 Q175 91 187 95" stroke="#5c4a36" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <path d="M233 95 Q245 91 257 97" stroke="#5c4a36" stroke-width="3" fill="none" stroke-linecap="round"/>
+
+          <!-- ─── GLASSES ─── -->
+          <!-- Left lens frame -->
+          <rect x="155" y="104" width="34" height="24" rx="10" fill="none" stroke="#38bdf8" stroke-width="3"/>
+          <!-- Right lens frame -->
+          <rect x="208" y="104" width="34" height="24" rx="10" fill="none" stroke="#38bdf8" stroke-width="3"/>
+          <!-- Bridge -->
+          <path d="M189 116 L208 116" stroke="#38bdf8" stroke-width="3"/>
+          <!-- Temples -->
+          <path d="M155 116 Q142 116 134 122" stroke="#38bdf8" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <path d="M242 116 Q255 116 263 122" stroke="#38bdf8" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <!-- Lens glare -->
+          <path d="M159 108 L163 113" stroke="white" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
+          <path d="M212 108 L216 113" stroke="white" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
+          <!-- Lens tint (very subtle blue) -->
+          <rect x="157" y="106" width="30" height="20" rx="8" fill="#e0f2fe" opacity="0.15"/>
+          <rect x="210" y="106" width="30" height="20" rx="8" fill="#e0f2fe" opacity="0.15"/>
+
+          <!-- ─── EYES ─── -->
+          <ellipse cx="172" cy="117" rx="13" ry="10" fill="white"/>
+          <ellipse cx="225" cy="117" rx="13" ry="10" fill="white"/>
+          <!-- Irises -->
+          <circle cx="173" cy="118" r="7.5" fill="#2d6a4f"/>
+          <circle cx="226" cy="118" r="7.5" fill="#2d6a4f"/>
+          <!-- Pupils -->
+          <circle cx="174" cy="119" r="4.5" fill="#0f172a"/>
+          <circle cx="227" cy="119" r="4.5" fill="#0f172a"/>
+          <!-- Highlights -->
+          <circle cx="176" cy="116" r="2.2" fill="white"/>
+          <circle cx="229" cy="116" r="2.2" fill="white"/>
+          <!-- Lower highlight -->
+          <circle cx="172" cy="122" r="1.2" fill="white" opacity="0.4"/>
+          <circle cx="225" cy="122" r="1.2" fill="white" opacity="0.4"/>
+
+          <!-- ─── NOSE ─── -->
+          <path d="M205 128 Q210 138 215 128" stroke="#C08060" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+          <circle cx="202" cy="134" r="3.5" fill="#C08060" opacity="0.35"/>
+          <circle cx="218" cy="134" r="3.5" fill="#C08060" opacity="0.35"/>
+
+          <!-- ─── MOUTH & SMILE ─── -->
+          <path d="M186 149 Q200 165 224 149" stroke="#b5694a" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <!-- Teeth -->
+          <path d="M191 151 Q210 160 229 151 Q222 158 210 159 Q198 158 191 151 Z" fill="white" opacity="0.85"/>
+          <!-- Lip crease -->
+          <line x1="210" y1="150" x2="210" y2="158" stroke="#c07850" stroke-width="1" opacity="0.4"/>
+          <!-- Dimples -->
+          <circle cx="183" cy="152" r="3" fill="#C08060" opacity="0.28"/>
+          <circle cx="237" cy="152" r="3" fill="#C08060" opacity="0.28"/>
+
+          <!-- ─── BLUSH ─── -->
+          <ellipse cx="158" cy="138" rx="16" ry="9" fill="#fda4af" opacity="0.22"/>
+          <ellipse cx="262" cy="138" rx="16" ry="9" fill="#fda4af" opacity="0.22"/>
+
+          <!-- ─── PLATFORM RING ─── -->
+          <ellipse cx="210" cy="492" rx="130" ry="14" fill="url(#bgGlow)" opacity="0.8"/>
+          <ellipse cx="210" cy="492" rx="110" ry="9" fill="#14b8a6" opacity="0.08"/>
+        </svg>
+
+        <!-- Floating medical elements (animated) -->
+        <div class="float-elem fe-1">
+          <svg width="52" height="52" viewBox="0 0 52 52"><circle cx="26" cy="26" r="25" fill="rgba(14,165,233,0.12)" stroke="rgba(56,189,248,0.4)" stroke-width="1.5"/><circle cx="26" cy="26" r="14" fill="rgba(56,189,248,0.15)"/><path d="M20 26h12M26 20v12" stroke="#38bdf8" stroke-width="2.5" stroke-linecap="round"/></svg>
+        </div>
+        <div class="float-elem fe-2">
+          <!-- Skin cell illustration -->
+          <svg width="48" height="48" viewBox="0 0 48 48"><circle cx="24" cy="24" r="22" fill="rgba(20,184,166,0.12)" stroke="rgba(20,184,166,0.4)" stroke-width="1.5"/><circle cx="24" cy="24" r="8" fill="rgba(20,184,166,0.3)"/><circle cx="24" cy="24" r="4" fill="#14b8a6" opacity="0.6"/><circle cx="17" cy="18" r="2" fill="#14b8a6" opacity="0.4"/><circle cx="32" cy="20" r="2" fill="#14b8a6" opacity="0.4"/><circle cx="16" cy="30" r="2" fill="#14b8a6" opacity="0.4"/><circle cx="31" cy="31" r="2" fill="#14b8a6" opacity="0.4"/></svg>
+        </div>
+        <div class="float-elem fe-3">
+          <!-- Magnifier -->
+          <svg width="46" height="46" viewBox="0 0 46 46"><circle cx="20" cy="20" r="14" fill="rgba(56,189,248,0.1)" stroke="#38bdf8" stroke-width="2"/><circle cx="20" cy="20" r="9" fill="rgba(56,189,248,0.08)"/><line x1="31" y1="31" x2="42" y2="42" stroke="#38bdf8" stroke-width="3" stroke-linecap="round"/><path d="M16 20 Q20 14 24 20" stroke="#38bdf8" stroke-width="1.5" fill="none" opacity="0.6"/></svg>
+        </div>
+        <div class="float-elem fe-4">
+          <!-- Result card -->
+          <svg width="70" height="50" viewBox="0 0 70 50"><rect width="70" height="50" rx="10" fill="rgba(9,21,37,0.85)" stroke="rgba(20,184,166,0.3)" stroke-width="1.5"/><rect x="0" y="0" width="70" height="12" rx="8" fill="rgba(20,184,166,0.2)"/><text x="8" y="9" font-size="6" fill="#14b8a6" font-family="Inter,sans-serif" font-weight="700">ANALYSIS RESULT</text><rect x="8" y="18" width="30" height="3" rx="1.5" fill="rgba(56,189,248,0.4)"/><rect x="8" y="25" width="22" height="3" rx="1.5" fill="rgba(255,255,255,0.2)"/><rect x="8" y="32" width="26" height="3" rx="1.5" fill="rgba(255,255,255,0.15)"/><circle cx="55" cy="30" r="10" fill="rgba(16,185,129,0.15)" stroke="#10b981" stroke-width="1.5"/><path d="M50 30 L54 34 L60 26" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+        </div>
+        <div class="float-elem fe-5">
+          <!-- DNA icon -->
+          <svg width="28" height="44" viewBox="0 0 28 44"><path d="M4 4 Q24 10 4 20 Q24 30 4 40" stroke="#38bdf8" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M24 4 Q4 10 24 20 Q4 30 24 40" stroke="#14b8a6" stroke-width="2" fill="none" stroke-linecap="round"/><line x1="6" y1="9" x2="22" y2="9" stroke="rgba(255,255,255,0.3)" stroke-width="1.5"/><line x1="4" y1="20" x2="24" y2="20" stroke="rgba(255,255,255,0.3)" stroke-width="1.5"/><line x1="6" y1="31" x2="22" y2="31" stroke="rgba(255,255,255,0.3)" stroke-width="1.5"/></svg>
+        </div>
+
+        <!-- Info tags -->
+        <div class="float-tag ft-1">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>
           <div class="ft-text">
             <strong>Grad-CAM</strong>
-            <span>Visual explanations</span>
+            <span>Visual heatmap</span>
           </div>
         </div>
-        <div class="float-tag ft-2 reveal-float">
-          <div class="ft-icon">📊</div>
+        <div class="float-tag ft-2">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#14b8a6" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
           <div class="ft-text">
             <strong>Calibrated</strong>
             <span>ECE 0.030</span>
           </div>
         </div>
-        <div class="float-tag ft-3 reveal-float">
-          <div class="ft-icon">⚡</div>
+        <div class="float-tag ft-3">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
           <div class="ft-text">
-            <strong>MC Dropout</strong>
-            <span>Uncertainty aware</span>
+            <strong>Uncertainty</strong>
+            <span>MC Dropout</span>
           </div>
         </div>
       </div>
